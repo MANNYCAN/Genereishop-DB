@@ -1,7 +1,7 @@
 package com.genereishop.proyecto.modelo;
 
 public class Adress {
-	private Long adressId;
+	private Long id;
 	private String adressState;
 	private Integer adressZip;
 	private String adressStreet;
@@ -18,20 +18,20 @@ public class Adress {
 		this.adressExtNum = adressExtNum;
 		this.adressIntNum = adressIntNum;
 		Adress.total++;
-		adressId = Adress.total;
+		id = Adress.total;
 	}//constructor
 
 	public Adress() {
 		Adress.total++;
-		adressId = Adress.total;
+		id = Adress.total;
 	}//constructor
 
-	public Long getAdressId() {
-		return adressId;
+	public Long getId() {
+		return id;
 	}//getAdressId
 
-	public void setAdressId(Long adressId) {
-		this.adressId = adressId;
+	public void setId(Long adressId) {
+		this.id = adressId;
 	}//setAdressId
 
 	public String getAdressState() {
@@ -76,7 +76,7 @@ public class Adress {
 
 	@Override
 	public String toString() {
-		return "Adress [adressId=" + adressId + ", adressState=" + adressState + ", adressZip=" + adressZip
+		return "Adress [Id=" + id + ", adressState=" + adressState + ", adressZip=" + adressZip
 				+ ", adressStreet=" + adressStreet + ", adressExtNum=" + adressExtNum + ", adressIntNum=" + adressIntNum
 				+ "]";
 	}//toString	
