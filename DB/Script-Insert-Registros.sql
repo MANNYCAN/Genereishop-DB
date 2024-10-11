@@ -20,6 +20,7 @@ values
 ('Victor Manuel Arena Cantoran',5552145250,'varenac@gmail.com','Pa$$w0rd',null,5);
 
 SELECT * FROM user;
+desc user;
 
 INSERT INTO product VALUES 
 (null,'Calcetas','Calcetas Transpirables-Gris',100,20,'./assets/calcetas 1.jpg'),

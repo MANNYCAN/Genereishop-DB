@@ -1,83 +1,84 @@
 package com.genereishop.proyecto.service;
+import java.net.PasswordAuthentication;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.genereishop.proyecto.dto.ChangePassword;
 import com.genereishop.proyecto.modelo.User;
+import com.genereishop.proyecto.repository.UserRepository;
 
 @Service
 public class UserService {
-	private static final ArrayList<User> lista = new ArrayList<User>();
+	//private static final ArrayList<User> lista = new ArrayList<User>();
 	
-	public UserService() {
-		lista.add(new User("Manuel",Long.valueOf(5515333341L),"sonic@gmail.com","T0stadit4s"));
-		lista.add(new User("Efren",Long.valueOf(5636196599L),"efren@gmail.com","Tost4dot4S"));
-		
-	}//Constructor 
+	public final UserRepository userRepository;
+	@Autowired
+	private PasswordEncoder encoder;
+	
+	
+	
+	@Autowired
+	public UserService(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
 
 	public List<User> getAllUsers() {
-		return lista;
+		return userRepository.findAll();
 	}//getAllUsers
 
 	public User getUser(Long usId) {
-		User usua = null;
-		for (User user : lista) {
-			if(user.getUserId()==usId) {
-				usua = user;
-				break;
-			}//if
-		}//foreach
-		return usua;
+		
+		return userRepository.findById(usId).orElseThrow( ()-> new IllegalArgumentException("El usuario con el id [" + usId
+				+ "] no existe"));
+		
 	}//Getuser
 
 	public User addUser(User user) {
-		User usua = null;
-		boolean flag = false;
-		//Agregar la validacion, cuando intente agregar el mismpo usaurio me regresara null
-		for(User u : lista){
-		 if(u.getUserEmail().equals(user.getUserEmail())){
-		     flag=true;
-		    break;
-		} //if
-		}//forEach
-		if(!flag){
-		lista.add(user);
-		usua = user;
-		 }//!flag
-		return usua;
-	}//Postuser
+		Optional<User> use= userRepository.findByUserEmail(user.getUserEmail());
+		if(use.isEmpty()) {
+			user.setUserPassword(encoder.encode(user.getUserPassword()));
+			return userRepository.save(user);
+		}else {
+			System.out.println("El usuario [" + user.getUserEmail()
+					+ "] ya se encuentra registrado");
+			return null;
+		}//if else isEmpity
+		
+	}//addUser
 
 	public User deleteUser(Long usId) {
-		User usua = null;
-		for (User user : lista) {
-			if(user.getUserId()==usId) {
-				usua = lista.remove(lista.indexOf(user));
-				break;
-			}//if
-		}//foreach
-		return usua;
-	}//Deleteuser
+		User user=null;
+		if (userRepository.existsById(usId)) {
+			user = userRepository.findById(usId).get();
+			userRepository.deleteById(usId);
+		}//ifExists
+		return user;
+		
+	}//deleteUser
 
 	public User updateUser(Long usId, ChangePassword changepassword, String userName, Long userPhone) {
-		User usua = null;
-		for (User user : lista) {
-			if(user.getUserId()==usId) {
-				if(user.getUserPassword().equals(changepassword.getPassword() )) {
-					if(changepassword.getNpassword() != null) {
-						user.setUserPassword(changepassword.getNpassword());
-						usua = user;
+		User user = null;
+		if(userRepository.existsById(usId)) {
+			User usuario = userRepository.findById(usId).get();
+			if(encoder.matches(changepassword.getPassword(), usuario.getUserPassword())) {
+					if(changepassword.getNpassword()!=null) {
+						usuario.setUserPassword(encoder.encode(changepassword.getNpassword()));
+						userRepository.save(usuario);
+						user=usuario;
 					}else {
-						if(userName != null)user.setUserName(userName);
-						if(userPhone != null)user.setUserPhone(userPhone);
-						if(changepassword.getPassword() != null)user.setUserPassword(changepassword.getPassword());
-						usua = user;
-					}
-					
+							if(userName != null)usuario.setUserName(userName);
+							if(userPhone != null)usuario.setUserPhone(userPhone);
+							if(changepassword.getPassword() != null)usuario.setUserPassword(encoder.encode(changepassword.getPassword()));
+							userRepository.save(usuario);
+							user = usuario;
+					}//if
 				}//if
-				break;
-			}//if
-		}//foreach
-		return usua;
+		}//exists
+		return user;
 	}//UpdateUser
 	
 	
