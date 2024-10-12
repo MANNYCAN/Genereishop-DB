@@ -1,14 +1,30 @@
 package com.genereishop.proyecto.modelo;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="adress")
 public class Adress {
-	private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "adressId", unique = true, nullable = false)
+	private Long adressId;
+	@Column(nullable = false)
 	private String adressState;
+	@Column(nullable = false)
 	private Integer adressZip;
+	@Column(nullable = false)
 	private String adressStreet;
+	@Column(nullable = false)
 	private String adressExtNum;
 	private String adressIntNum;
 	
-	private static Long total = Long.valueOf(0);
+	//private static Long total = Long.valueOf(0);
 
 	public Adress(String adressState, Integer adressZip, String adressStreet, String adressExtNum,
 			String adressIntNum) {
@@ -17,21 +33,21 @@ public class Adress {
 		this.adressStreet = adressStreet;
 		this.adressExtNum = adressExtNum;
 		this.adressIntNum = adressIntNum;
-		Adress.total++;
-		id = Adress.total;
+//		Adress.total++;
+//		adressId = Adress.total;
 	}//constructor
 
 	public Adress() {
-		Adress.total++;
-		id = Adress.total;
+//		Adress.total++;
+//		adressId = Adress.total;
 	}//constructor
 
 	public Long getId() {
-		return id;
+		return adressId;
 	}//getAdressId
 
 	public void setId(Long adressId) {
-		this.id = adressId;
+		this.adressId = adressId;
 	}//setAdressId
 
 	public String getAdressState() {
@@ -76,7 +92,7 @@ public class Adress {
 
 	@Override
 	public String toString() {
-		return "Adress [Id=" + id + ", adressState=" + adressState + ", adressZip=" + adressZip
+		return "Adress [Id=" + adressId + ", adressState=" + adressState + ", adressZip=" + adressZip
 				+ ", adressStreet=" + adressStreet + ", adressExtNum=" + adressExtNum + ", adressIntNum=" + adressIntNum
 				+ "]";
 	}//toString	
