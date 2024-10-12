@@ -1,8 +1,18 @@
 package com.genereishop.proyecto.modelo;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-
+@Entity
+@Table(name="product")
 public class Product {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="productId",unique=true, nullable=false)
 	private Long productId;
 	private String productName;
 	private String productDescription;
@@ -10,7 +20,7 @@ public class Product {
 	private int productStock;
 	private String productImage;
 	
-	private static Long  total = Long.valueOf(0);
+	//private static Long  total = Long.valueOf(0);
 	
 	
 	
@@ -22,15 +32,15 @@ public class Product {
 		this.productPrice = productPrice;
 		this.productStock = productStock;
 		this.productImage = productImage;
-		Product.total++; 
-		productId = Product.total;
+//		Product.total++; 
+//		productId = Product.total;
 	}//constructor
 
 
 
 	public Product () {
-		Product.total++; 
-		productId = Product.total;
+//		Product.total++; 
+//		productId = Product.total;
 		
 	}//constructor
 
