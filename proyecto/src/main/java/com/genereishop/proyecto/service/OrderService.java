@@ -3,61 +3,62 @@ package com.genereishop.proyecto.service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.genereishop.proyecto.modelo.Order;
+import com.genereishop.proyecto.modelo.User;
+import com.genereishop.proyecto.repository.OrderRepository;
 
 
 @Service
 public class OrderService {
-	private final ArrayList<Order> lista = new ArrayList<Order>();
-	public OrderService() {
-		lista.add(new Order (LocalDate.of(2024, 8, 31)));
-		lista.add(new Order (LocalDate.of(2024, 6, 19)));
-		lista.add(new Order (LocalDate.of(2024, 4, 12)));
-		lista.add(new Order (LocalDate.of(2024, 8, 9)));
-	}// constructor OrderService
 	
+	public final OrderRepository orderRepository; 
+	
+	@Autowired
+	public OrderService(OrderRepository orderRepository) {
+		this.orderRepository = orderRepository;
+	}
+
 	public List<Order> gettAllOrders() {
-		return lista;
+		return orderRepository.findAll();
 	}//gettAllOrders
 
 	public Order getOrders(Long orderId) {
-		Order or=null;
-		for (Order order : lista) {
-			if (order.getOrderId()==orderId) {
-				or=order;
-			}//if
-		}//foreach
-		return or;
+		return orderRepository.findById(orderId).orElseThrow( ()-> new IllegalArgumentException("La orden con el id [" + orderId
+				+ "] no existe"));
 	}//getOrder
 
 	public Order addOrder(Order order) {
-		lista.add(order);
-		return order;
+		Optional<Order> ord = orderRepository.findByOrderId(order.getOrderId());
+		if(ord.isEmpty()) {
+			return orderRepository.save(order);
+		}
+		return null;
 	}//addOrder
 
 	public Order deleteOrder(Long orderId) {
-		Order or=null;
-		for (Order order : lista) {
-			if (order.getOrderId()==orderId) {
-				or=lista.remove(lista.indexOf(order));
-				break;
-			}//if
-		}//foreach
-		return or;
+		Order order=null;
+		if (orderRepository.existsById(orderId)) {
+			order = orderRepository.findById(orderId).get();
+			orderRepository.deleteById(orderId);
+		}//ifExists
+		return order;
 	}//deleteOrder
 
 	public Order updateService(Long orderId, LocalDate orderDate) {
 		Order or=null;
-		for (Order order : lista) {
-			if (order.getOrderId().equals(orderId)) {
-				if (orderDate != null)order.setOrderDate(orderDate);
+		if(orderRepository.existsById(orderId)) {
+			Order order = orderRepository.findById(orderId).get();
+			if(orderDate != null) {
+				order.setOrderDate(orderDate);
+				orderRepository.save(order);
 				or=order;
-				break;
-			}//if
-		}//for
+			}
+		}//repository
 		return or;
 	}//updateService
 	

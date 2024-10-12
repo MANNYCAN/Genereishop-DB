@@ -2,36 +2,50 @@ package com.genereishop.proyecto.modelo;
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="`order`")
 public class Order {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "orderId", unique = true, nullable = false)
 	private Long orderId;
+	@Column(nullable = false)
 	private LocalDate orderDate;
-	private Long userId;
+	@Column(nullable = false)
+	private Long user_userId;
 	
-	private static Long total = Long.valueOf(0);
 	
 ///////////////////////Constructores///////////////////////////
-
-	public Order(LocalDate orderDate) {
+	public Order(LocalDate orderDate, Long user_userId) {
 		this.orderDate = orderDate;
-		Order.total++;
-		orderId = Order.total;
-		//userId = Order.total;
-	}// (1)Constructor Order 
-
+		this.user_userId = user_userId;
+	}
+	
 	public Order() {
-		Order.total++;
-		orderId = Order.total;
-		//userId = Order.total;
 	}// (2)contructor Order
 	
 
-///////////////////////Setters & Getters//////////////////////
+	///////////////////////Setters & Getters//////////////////////
+	public Long getUserId() {
+		return user_userId;
+	}
 
+	public void setUserId(Long userId) {
+		this.user_userId = userId;
+	}
 
 	public Long getOrderId() {
 		return orderId;
 	}//getOrderId
+	
+
 	public void setOrderId(Long orderId) {
 		this.orderId = orderId;
 	}//setOrderId
