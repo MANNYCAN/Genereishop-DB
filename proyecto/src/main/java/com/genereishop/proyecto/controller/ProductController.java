@@ -31,7 +31,7 @@ public class ProductController {
 		return productService.getAllProducts();
 	}
 	@GetMapping(path= "{productId}")
-	public Product getProduct (Long productId) {
+	public Product getProduct (@PathVariable("productId") Long productId) {
 		return productService.getProduct(productId);
 	}
 	

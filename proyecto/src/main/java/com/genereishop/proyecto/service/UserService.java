@@ -80,6 +80,17 @@ public class UserService {
 		}//exists
 		return user;
 	}//UpdateUser
+
+	public boolean validateUser(User user) {
+		Optional<User> us= userRepository.findByUserEmail(user.getUserEmail());
+		if(us.isPresent()) { //para saber que esta ahi el usuario
+			User tmpUser=us.get(); //lo saco de la bolsa
+			if(encoder.matches(user.getUserPassword(), tmpUser.getUserPassword())) {
+				return true;
+			}//if matches
+		}//ifPresent
+		return false;
+	}//validateUser
 	
 	
 }//userservice
