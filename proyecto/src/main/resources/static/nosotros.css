@@ -1,0 +1,510 @@
+
+
+#header{
+    padding-left: 0px;
+
+}
+
+.container-fluid, .navbar-toggler, .navbar-toggler-icon, .nav-link{
+    color: #e5ebd2;
+}
+
+.navbar-toggler, .navbar-toggler-icon, .nav-link{
+    margin-right: 20px;
+}
+.navbar{
+    
+    padding: 0px;
+    font-family: "Public Sans";
+    position:fixed;
+    z-index: 20;
+    width: 100%;
+    right: 0;
+    top: 0;
+}
+#titleProducts{
+    margin-top: 50px;
+}
+
+.navbar-toggler{
+    border-color: #e5ebd2;
+    margin-bottom: 10px;
+}
+.navbar-toggler-icon{
+    color: #e5ebd2;
+
+}
+
+body {
+    font-family: 'Public Sans', sans-serif;
+    background-color: #e5ebd2; /* Color de fondo principal */
+    color: #11220b; /* Color principal del texto */
+    padding-top: 150px;
+    
+}
+
+/*Estilos generales para los h */
+/*h1 */
+h1{
+    font-size: 72px;
+    text-align: center;
+}
+
+/*h2 */
+h2{
+    font-size: 56px;
+    text-align: center;
+}
+
+/*h3 */
+h3{
+    font-size: 36px;
+}
+
+    
+    @media (max-width: 420px) {
+        .responsiveH2{
+            font-size: 26px; 
+        }
+    }/* responsih2 */
+
+/* Estilo para el título "Acerca de Nosotros" */
+.acerca-titulo {
+    text-align: center;
+    margin: 0px 0px 0px 0px;
+    /* color: #11220b; Verde oscuro para el título principal */
+    }
+
+/**
+Haciendo responsivos los botones de busqueda
+*/
+#prendaBusca{
+    margin-right: 1%;
+}
+#BotonFiltro, #BotonTodo{
+    margin-right: 6%;
+}
+
+@media (max-width: 450px) {
+        #prendaBusca{
+            display: block; 
+            width: 100%;
+        }
+        #BotonFiltro{
+        display: block; 
+        width: 100%;
+        margin-bottom: 30px; 
+        margin-top: 30px;
+        
+        }
+        #BotonTodo{
+            display: block; 
+            width: 100%; 
+        }
+    }
+
+
+/* Estilo para el rectángulo de color */
+.team-section {
+    background-color: #404866; /* Rectángulo con fondo verde grisáceo */
+    padding: 20px;
+    border-radius: 16px;
+    border-top-right-radius: 120px;
+    border-end-start-radius: 120px;
+    margin-top: 20px;
+    margin-left: 100px;
+    margin-right: 100px;
+    color: #e5ebd2; /* Texto dentro del rectángulo en color claro */
+}
+
+.team-sections {
+    background-color: #404866; /* Rectángulo con fondo verde grisáceo */
+    padding: 20px;
+    border-radius: 16px;
+    margin-top: 20px;
+    color: #e5ebd2; /* Texto dentro del rectángulo en color claro */
+}
+
+.mision-image {
+    max-width: 20%; /* La imagen no excederá el ancho del contenedor */
+    height: auto; /* Mantiene la proporción de la imagen */
+    margin: 0px 20px 20px 20px;
+}
+
+.mision-content {
+    display: flex; /* Utiliza flexbox para alinear imagen y texto */
+    align-items: center; /* Centra verticalmente */
+}
+
+@media (max-width: 420px) {
+    .rounded-start{
+        max-width: 150px;
+        max-height: 150px; 
+    }
+}/* responsih2 */
+
+.justText{
+    text-align: justify;
+}
+
+/* Título más pequeño dentro del rectángulo */
+.team-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #e5ebd2; /* Color claro para el título dentro del rectángulo */
+}
+
+/* Estilo para la imagen dentro del rectángulo */
+.team-image {
+    width: 400px;
+    height: auto;
+    max-width: 100%;
+    margin: 10px auto;
+    border: 3px solid #e5ebd2; /* Borde de imagen en verde claro */
+    }
+
+
+    .col {
+        width: 100%;
+    }
+    
+    @media (min-width: 768px) {
+        .col {
+            width: 50%; 
+        }
+    }
+    
+    @media (min-width: 1200px) {
+        .col {
+            width: 50%; 
+        }
+    }
+    
+    
+    
+    .card-title{
+        font-family: "Public Sans", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: weight;
+        font-style: normal;
+        color: #E5EBD2;
+    }
+    .card-subtitle{
+        font-family: "Public Sans", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: weight;
+        font-style: normal;
+        color: #E5EBD2;
+    
+    }
+    .card-text{
+        font-family: "Public Sans", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: weight;
+        font-style: normal;
+        color: #E5EBD2;
+    }
+    .text-body-secondary{
+        font-family: "Public Sans", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: weight;
+        font-style: normal;
+        color: #E5EBD2;
+    }
+    
+    .img-fluid, .rounded-start{  
+        width: 220px;
+        height: 220px;
+        margin: 12px auto;
+        border-radius: 30px;
+    }
+
+    
+    /* Ajustas en FIGMA dimensiones de foto */
+
+    .imgSrc {
+        border-radius: 20px;
+    } /* bore de imagen de carg en agregar producto */
+    
+    #upload_widget{
+        background-color: #49761a;
+        border-color: #92af5a;
+        color: #E5EBD2;
+        font-family: "Public Sans", sans-serif;
+    }/* boton de carga imagen cloudinary */
+    #upload_widget:hover{
+        background-color: #92af5a;
+        border-color: #4a741a;
+    }/* hover de boton cloudinary */
+
+    @media (max-width: 420px) {
+        .imgSrc{
+            max-width: 150px;
+            max-height: 150px; 
+        }
+    }/* responsih2 */
+    
+    .card, .mb-3{
+        margin: 10px 10px;
+        background-color: #404866;
+        /* border: 2px solid;
+        border-color: black; */
+    }
+    .card:hover{
+        transform: scale(1.1);
+        background-color: #92af5a;
+        border: #49761a 1px double;
+    }
+    
+    .icon-links{
+        margin: 0px 8px 0px 8px;
+    }
+    
+    .justify-content-center{
+        background-color: #E5EBD2;
+    }
+    
+    .container-cards{
+        margin: 0px 100px 0px 100px;
+    }
+    
+    .text-body-secondary{
+        font-family: "Public Sans", sans-serif;
+        color: #E5EBD2;
+    }
+
+    #contactenos_title{
+        text-align: center;
+    }
+
+    #container_contactenos{
+        margin-bottom: 20px;
+    }
+
+    .botones{
+        background-color: #4a741a;
+        border-color: #4a741a;
+        font-family: "Public Sans", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: weight;
+        font-style: normal;
+        color: #E5EBD2;
+        
+    }
+  
+
+    .botones:hover{
+        background-color: #92af5a;
+        border-color: #4a741a;
+        
+    }
+    .botonesFil{
+        background-color: #404866;
+        border-color: #404866;
+        font-family: "Public Sans", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: weight;
+        font-style: normal;
+        color: #E5EBD2;
+        
+    }
+  
+
+    .botonesFil:hover{
+        background-color: #92af5a;
+        border-color: #4a741a;
+        color: #404866;
+        
+    }
+
+    @media (max-width: 430px) {
+        #contactenos_title{
+            font-size: 22px;
+        }
+
+        label{
+            font-size: 16px;
+        }
+    }
+
+    .img_carrusel{
+    max-width: 100%;
+    /* height: auto */
+    }
+
+    .descripcion{
+        font-size: 20px;
+        text-align: left;
+    }
+
+    .btnCard{
+        display: inline-block;
+        width: 180px;
+        height: 40px;
+        background-color: #4a741a;
+        color: #E5EBD2;
+        text-decoration: none;
+        border-radius: 25px;
+        line-height: 30px;
+        text-align: center;
+        
+    }
+    .btnCard:hover{
+        background-color: #92af5a;
+        border-color: #4a741a;
+    }
+
+    .card-img-top{
+        margin-top: 10px;
+        border-radius: 10px;
+        box-shadow: 8px 8px 8px #92af5a;
+    
+    }
+
+    .bii{
+        margin-left: 50px;
+    }
+
+    #logo{
+        height: auto;
+      
+    }
+
+    .index{   
+            height: auto;   
+            border-radius: 30px;
+            border: none 
+    }
+    .indexgrande{
+        height: auto;
+        width: 500px;
+        border: none
+    }
+
+
+    @media (max-width: 700px) {
+        .team-sections{
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+        .index{
+            margin: 12px;
+        }
+
+        .team-sections .col {
+          flex: 0 0 100%;
+          max-width: 100%;
+          display: flex;
+          justify-content: center;
+          margin-bottom: 15px;
+        }
+      
+        .team-sections .row {
+          justify-content: center;
+          margin: 12px;
+        }
+      
+        .team-sections img {
+          max-width: 100%;
+          height: auto;
+          margin: 20px;
+        }
+      }
+      
+      .btnSubirBoton {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 100;
+        
+    }
+
+    #cuentaCompras{
+    background-color: #404866; /* Rectángulo con fondo verde grisáceo */
+    padding: 20px;
+    border-radius: 16px;
+    margin-top: 20px;
+    color: #e5ebd2; /* Texto dentro del rectángulo en color claro */
+    }
+
+    #Nosotros_texto, #Valoresnosotros, #Visionnosotros, #Misionnosotros{
+        font-size: 20px;
+        text-align: justify;
+    }
+
+
+    #texto-degradado {
+        background: -webkit-linear-gradient(#4a741a,#4a741a);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: #E5EBD2; 
+    }
+
+   /* Estilo base para el contenedor y la imagen */
+#imgIndex {
+    position: relative;
+    width: 100%;           
+    max-width: 100%;       
+    margin: 0 auto;         
+} 
+#imgIndex img {
+    width: 100%;           
+    height: auto;          
+    object-fit: cover;      
+}
+@media (max-width: 768px) {
+    #imgIndex {
+    max-width: 90%;      
+    }
+}
+
+@media (max-width: 480px) {
+    #imgIndex {
+      padding: 10px;       /* Agregar espacio para que la imagen no toque los bordes */
+    }
+    
+}
+
+.btn-sobre-imagen {
+    position: absolute; 
+    top: 85%;           
+    left: 50%;          
+    transform: translate(-50%, -50%); /* Ajusta el botón para quedar justo en el centro */
+    background-color: #E5EBD2;
+    color: #4a741a;
+    font-family: "Public Sans", sans-serif;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  /* Efecto hover en el botón */
+  .btn-sobre-imagen:hover {
+    background-color: #4a741a;
+    color: #E5EBD2;
+  }
+
+  @media (max-width: 768px) {
+    #imgIndex {
+      font-size: 0.9rem;  
+    }
+  
+    .btn-sobre-imagen {
+      padding: 8px 16px;  /* Reducir el padding en tablets */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    #imgIndex {
+      font-size: 0.8rem;  /* Escala más pequeña para móviles */
+    }
+  
+    .btn-sobre-imagen {
+      padding: 6px 12px;  /* Reducir más el padding en móviles */
+    }
+  }
