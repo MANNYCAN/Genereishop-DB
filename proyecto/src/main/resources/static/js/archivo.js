@@ -40,7 +40,8 @@ function loadFooter() {
 
 function cerrarSesion() {
         localStorage.removeItem('sesion_activa');
-        location.reload()
+        sessionStorage.clear();
+        location.reload();
     }
 function loadNavbar() {
     const sesionActiva = JSON.parse(localStorage.getItem('sesion_activa'));

@@ -164,7 +164,7 @@ const contador = usuarioArreglo.reduce((acc, obj) => {
     repeticiones: contador[key],
   }));
 
-  resultado.sort((a, b) => a.objeto.modelo - b.objeto.modelo);  //ordenar
+  resultado.sort((a, b) => a.objeto.productId - b.objeto.productId);  //ordenar
   contadorTabla.insertAdjacentHTML("afterbegin",`${resultado.length}`);
 
   let suma=0;
@@ -173,21 +173,21 @@ const contador = usuarioArreglo.reduce((acc, obj) => {
     tablaListaCompras.insertAdjacentHTML("beforeend",`
         <tr>
                <td>${i+1}</td>
-               <td>${resultado[i].objeto.name}</td>
+               <td>${resultado[i].objeto.productName}</td>
                <td>${resultado[i].repeticiones}</td>
-               <td>$ ${resultado[i].objeto.price} MXN</td>
+               <td>$ ${resultado[i].objeto.productPrice} MXN</td>
                <td> 
-                <button type="button" data-id=${resultado[i].objeto.modelo} title="Agregar" onclick="funcionIncrementar(this)">
+                <button type="button" data-id=${resultado[i].objeto.productId} title="Agregar" onclick="funcionIncrementar(this)">
                 <i class="bi bi-plus"></i>
                 </button>
-                <button type="button" data-id=${resultado[i].objeto.modelo} title="Quitar" onclick="funcionDecrementar(this)">
+                <button type="button" data-id=${resultado[i].objeto.productId} title="Quitar" onclick="funcionDecrementar(this)">
                 <i class="bi bi-dash"></i>
                 </button>
                </td> 
         </tr>
        `)
 
-    let precio= resultado[i].objeto.price;
+    let precio= resultado[i].objeto.productPrice;
     let cant= resultado[i].repeticiones;
     let total=precio*cant;
     suma+=total;
@@ -222,7 +222,7 @@ btnClear.addEventListener("click",function(event){
 })//limpiar 
 
  function encontrarRegresarProductoPorId(array,id){ //Funcion para que me regrese un obj por medio de su modelo
-    const encontrado = array.find(ob => ob.modelo === id);
+    const encontrado = array.find(ob => ob.productId === id);
     return encontrado;
 }
 
@@ -284,7 +284,7 @@ function funcionDecrementar(event){
     //window.alert(productoAAgregar.price)
     //usuarioArreglo.push(productoAAgregar);
     //window.alert(usuarioArreglo[5].name)
-    const index= usuarioArreglo.findIndex(obj => obj.modelo===idDelBoton);
+    const index= usuarioArreglo.findIndex(obj => obj.productId===idDelBoton);
     if(index !== -1){
         usuarioArreglo.splice(index, 1);
         
@@ -311,12 +311,5 @@ function funcionDecrementar(event){
           }
         iniciar();
     }
-
-
-     
-   
-
-   
-   
 
 } 

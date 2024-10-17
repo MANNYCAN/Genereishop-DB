@@ -171,6 +171,31 @@ function showAlert(element, message) {
             bolsaDeCompras: []
 
         };
+        
+        const Usuariop =   {
+        "userName": User_name.value.trim(),
+        "userPhone": user_phoneNumber.value.trim(),
+        "userEmail": user_email.value.trim(),
+        "userPassword": user_password.value.trim(),
+        "adressAdressId": null
+    }
+    
+			const myHeaders = new Headers();
+			myHeaders.append("Content-Type", "application/json");
+			
+			const raw = JSON.stringify(Usuariop);
+			
+			const requestOptions = {
+			  method: "POST",
+			  headers: myHeaders,
+			  body: raw,
+			  redirect: "follow"
+			};
+			
+			fetch("http://localhost:8080/api/users/", requestOptions)
+			  .then((response) => response.text())
+			  .then((result) => console.log(result))
+			  .catch((error) => console.error(error));
 
          localStorage.setItem(`${user_email.value.trim()}`,JSON.stringify(Usuario));
 
@@ -180,6 +205,8 @@ function showAlert(element, message) {
         user_password.value = "";
         user_confirm_password.value = "";
         confirm_checkbox.checked = false;
+        
+      
 
         alert_container.insertAdjacentHTML("afterbegin",`
         <div class".alert">

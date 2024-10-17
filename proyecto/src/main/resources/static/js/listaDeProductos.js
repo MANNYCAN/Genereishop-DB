@@ -5,6 +5,8 @@ const BotonTodo=document.getElementById("BotonTodo");
 const carritoModal = document.getElementById("carritoModal");
 const contadorCarritoC=document.getElementById("contadorCarritoC");
 
+
+
 let arregloProductos= [];
 
 ////////////////////// Funcion de JC style="width: 18rem; height: 24rem;
@@ -12,7 +14,7 @@ function addItem(item) {
 
     function generarCalificacion() {
         return Math.ceil(Math.random() * 3 + 2); 
-    }
+    }//generarCalificacion
     
 
     function mostrarEstrellas(numEstrella) {
@@ -22,31 +24,147 @@ function addItem(item) {
             estrellasHTML += estrella;
         }
         return estrellasHTML
-    }
+    }//mostrarEstrellas
 
     const itemHTML = ` 
     <br>
     <div class="card" style="width: 18rem; display: flex; flex-direction: column; justify-content: space-between; align-items: center;  margin: 40px auto;">
   <div style="width: 100%; display: flex; justify-content: center;">
-    <img src="${item.img}" class="card-img-top" alt="${item.name}" style="max-width: 100%; height: 300px; object-fit: cover;">
+    <img src="${item.productImage}" class="card-img-top" alt="${item.productName}" style="max-width: 100%; height: 300px; object-fit: cover;">
   </div>
   <div class="card-body" style="flex-grow: 1; width: 100%; display: flex; flex-direction: column; justify-content: space-between; text-align: center;">
     <div>
-      <h3 class="card-title">${item.name}</h3>
+      <h3 class="card-title">${item.productName}</h3>
     </div>
-    <p class="card-text descripcion">${item.description}</p>
-    <div class="card-text descripcion">$ ${item.price} MXN ${mostrarEstrellas(generarCalificacion())}</div>
+    <p class="card-text descripcion">${item.productDescription}</p>
+    <div class="card-text descripcion">$ ${item.productPrice} MXN ${mostrarEstrellas(generarCalificacion())}</div>
   </div>
-  <button type="button" id=${item.modelo} class="btnCard" style="margin: 10px auto;" onclick="agregarProductosCarrito(event)" >Agregar a Carrito</button>   
+  <button type="button" id=${item.productId} class="btnCard" style="margin: 10px auto;" onclick="agregarProductosCarrito(event)" >Agregar a Carrito</button>   
 </div>
 `  //Agregar después la referencia a la página del articulo individual
     
 
     productCard.insertAdjacentHTML("beforeend", itemHTML);
     
+}//addItem
+
+let arregloAllproductos = []
+
+function inicio (){		
+
+			const requestOptions = {
+			  method: "GET",
+			  
+			  redirect: "follow"
+			};
+			
+			fetch("http://localhost:8080/api/productos/", requestOptions)
+			  .then((response) => response.json())
+			  .then((result) => {arregloAllproductos = result;
+			  console.log(arregloAllproductos)
+			  arregloAllproductos.forEach(x => addItem(x));
+			  localStorage.setItem ("AllProducts" , JSON.stringify(arregloAllproductos))
+			  })
+			  .catch((error) => console.error(error));
+	}//inicio		  
+			  
+	inicio();	
+	BotonFiltro.addEventListener("click", function(event){
+				        event.preventDefault();
+				        if(prendaBusca.value!==""){
+				        while (productCard.firstChild) {
+				            productCard.removeChild(productCard.firstChild);
+				          }
+				        const filtrado = (productos = [], texto) => {
+				            return productos.filter(item => item.productName.toLowerCase().trim().includes(texto.toLowerCase().trim()));
+				        }  
+				        const productosFiltrados = filtrado(arregloAllproductos, prendaBusca.value);
+				        productosFiltrados.forEach(i => addItem(i));
+					    }else{
+					        window.alert("Escribe algo")
+					    }
+					    });
+					    
+	BotonTodo.addEventListener("click",function(event){
+        event.preventDefault();
+        while (productCard.firstChild) {
+        productCard.removeChild(productCard.firstChild);}
+        arregloAllproductos.forEach(i => addItem(i));
+        prendaBusca.value="";
+    });	  
+    
+        function iniciarConTodoCarrito(){
+        if(localStorage.getItem("sesion_activa") !== null){
+        let emaill=(JSON.parse(localStorage.getItem("sesion_activa"))).email;
+        let cont=(JSON.parse(localStorage.getItem(`${emaill}`))).bolsaDeCompras.length;
+
+            contadorCarritoC.insertAdjacentHTML("afterbegin",
+                `
+                ${cont}
+                <i class="bi bi-cart2"> </i>
+                `
+            );
+        }
+    }//iniciarConTodoCarrito
+    iniciarConTodoCarrito();
+
+function encontrarRegresarProductoPorId(array,id){ //Funcion para que me regrese un obj por medio de su modelo
+    const encontrado = array.find(ob => ob.productId === id);
+    return encontrado;
+}//encontrarRegresarProductoPorId
+
+// Aqui empiezo a regirstra el progreso del boton de agregar a carrito
+function agregarProductosCarrito(event){ //Agregue event para traer el id del boton ya que el id del boton estara asociado a el id del producto
+    if(localStorage.getItem("sesion_activa") !== null){
+        let emaill=(JSON.parse(localStorage.getItem("sesion_activa"))).email;
+       
+        //(JSON.parse(localStorage.getItem(`${emaill}`))).contador++;
+        //(JSON.parse(localStorage.getItem("sesion_activa"))).contador++;
+         //Seccion para desarrollar la busqueda del producto en un arreglo del local storage y agregarlo a un arreglo que tiene como propiedad la persona
+         const idDelBoton =parseInt(event.target.id);  //obtienes el id
+         //window.alert((encontrarRegresarProductoPorId(arregloProductos,idDelBoton)).name)
+        //window.alert(idDelBoton+1);
+        //window.alert(arregloProductos[0].name + idDelBoton)
+         //Ir por el producto
+        let productoEncontrado=encontrarRegresarProductoPorId(arregloAllproductos, idDelBoton);
+        //window.alert(productoEncontrado.productName)
+        let arregloConNuevoValor=(JSON.parse(localStorage.getItem(`${emaill}`))).bolsaDeCompras
+        arregloConNuevoValor.push(productoEncontrado)
+        
+        let datos={
+            nombre:(JSON.parse(localStorage.getItem(`${emaill}`))).nombre,
+            correo:(JSON.parse(localStorage.getItem(`${emaill}`))).correo,
+            telefono: (JSON.parse(localStorage.getItem(`${emaill}`))).telefono,
+            contraseña: (JSON.parse(localStorage.getItem(`${emaill}`))).contraseña,
+            bolsaDeCompras: arregloConNuevoValor
+        }
+        localStorage.setItem((JSON.parse(localStorage.getItem(`${emaill}`))).correo, JSON.stringify(datos))
+        //window.location.reload();
+        while (contadorCarritoC.firstChild) {
+            contadorCarritoC.removeChild(contadorCarritoC.firstChild);
+          }
+        contadorCarritoC.insertAdjacentHTML("afterbegin",
+            `
+            ${arregloConNuevoValor.length}
+            <i class="bi bi-cart2"> </i>
+            `
+        );
+    }else{
+        $('#carritoModal').modal('show');  // Para que se le aparezca un modal que le dice que debe de iniciar o regirstrase antes de agregar al carrito
+    }   
+};
+//Funciones para redirigir a otra pagina cuando presionas los botones que salen cuando el usuario quiere agregar a carrito y no esta con sesion activa
+function irAReferenciaRegistrar() {
+    window.location.href = "../registroUsuarios.html";
+}
+function irAReferenciaInicioSesion() {
+    window.location.href = "../login.html";
 }
 
-addItem({
+
+
+
+/*addItem({
     name: "Tenis DDM",
     img: './assets/tennismuertos.png',
     description: "Tenis de gamuza edición día de muertos",
@@ -369,27 +487,9 @@ function irAReferenciaRegistrar() {
 function irAReferenciaInicioSesion() {
     window.location.href = "../login.html";
 }
+*/
 
 
-
-
-
-    //if(this.localStorage.getItem("productData")!=null){
-       // nuevoArray = JSON.parse(this.localStorage.getItem("productData"));
-        //arregloProductos.push(productData);
-       //this.localStorage.setItem("productArray",JSON.stringify(arregloProductos));
-       //addItem(productData);
-       //this.localStorage.removeItem("productData");
-       
-       // let nuevoArray= JSON.parse(this.localStorage.getItem("productArray"));
-      // window.alert("SE REGISTRO EL PRODUCTO CORRECTAMENTE);  ENVIADO SUS DATOS CON ÉXITO"); 
-    //alertMensaje.innerHTML=`Hola, <strong>${this.localStorage.getItem("nombre")} </strong>, bienvenido/a de nuevo`;
-    //}//if nombre!=null
-
-    //alertMensaje.style.display="block"; //Para que se muestre, si esto solo agregas al div pero no lo muestra
-
-//});//load
-
-//for(let i=0; i<nuevoArray.length;i++){
-    //addItem(nuevoArray[i])
-//}
+			  
+			  
+			  

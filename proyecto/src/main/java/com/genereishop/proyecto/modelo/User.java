@@ -31,7 +31,7 @@ public class User {
 	private String userPassword;
 	//@ManyToOne
 	//@JoinColumn(name ="adress_adressId", nullable = false, referencedColumnName = "adressId")
-	@Column(nullable = false)
+	//@Column(nullable = false)
 	private Long adressAdressId ;//llave foranea 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_userId", referencedColumnName = "userId")

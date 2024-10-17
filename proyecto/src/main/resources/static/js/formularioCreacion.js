@@ -140,6 +140,35 @@ button_publicar.addEventListener("click",function(event){
         price: parseInt(productPrice.value), // Convertir a número
         modelo: id  //id que lo ocuparemos cuando querrámos eliminar un elemento
     };
+    
+    const productoData2 = {
+		"productName": productName.value,
+		"productDescription": productDescription.value,
+		"productPrice": parseInt(productPrice.value),
+		"productStock": null,
+		"productImage": srcImg
+	}
+    const myHeaders = new Headers();
+				myHeaders.append("Authorization", `Bearer: ${sessionStorage.getItem('authToken')}`);
+				myHeaders.append("Content-Type", "application/json");
+				
+				const raw = JSON.stringify(productoData2);
+				
+				const requestOptions = {
+				  method: "POST",
+				  headers: myHeaders,
+				  body: raw,
+				  redirect: "follow"
+				};
+				
+				fetch("http://localhost:8080/api/productos/", requestOptions)
+				  .then((response) => response.text())
+				  .then((result) => console.log(result))
+				  .catch((error) => console.error(error));
+    
+    
+    
+    
     //arrayProductos.push(productData)
     // Convertir el objeto a formato JSON
     const jsonProductData = JSON.stringify(productData);

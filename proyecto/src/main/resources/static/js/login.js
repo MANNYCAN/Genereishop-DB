@@ -101,6 +101,54 @@ if(is_valid){
             email: user_email.value.trim(),
             name: (JSON.parse(localStorage.getItem(user_email.value.trim()))).nombre,
             timestamp: Date.now()}));
+            const myHeaders = new Headers();
+				myHeaders.append("Content-Type", "application/json");
+				
+				const raw = JSON.stringify({
+				  "userEmail": user_email.value.trim(),
+				  "userPassword": user_password.value
+				});
+				
+				const requestOptions = {
+				  method: "POST",
+				  headers: myHeaders,
+				  body: raw,
+				  redirect: "follow"
+				};
+				
+				
+				fetch("http://localhost:8080/api/login/", requestOptions)
+				  .then((response) => {
+				    if (!response.ok) {
+				      throw new Error('Error en la autenticación: ' + response.statusText);
+				    }
+				    return response.json(); // Suponiendo que la respuesta viene como JSON
+				  })
+				  .then((result) => {
+				    console.log(result); // Ver el resultado de la respuesta
+				
+				    // Aquí asumo que el token está en result.token
+					    const token = result.accessToken;
+					
+					// Guardar el token en sessionStorage
+					    sessionStorage.setItem('authToken', token);
+					    console.log("Token guardado en sessionStorage:", token);
+					  })
+					  .catch((error) => {
+					    console.error('Error:', error);
+					  });
+
+				
+				
+				//fetch("http://localhost:8080/api/login/", requestOptions)
+				  //.then((response) => response.text())
+				  //.then((result) => {console.log(result);
+				   //console.log('Token recibido:', token);
+				   //sessionStorage.setItem('authToken', token);})
+				  //.catch((error) => console.error(error));
+				 
+				  
+				  
             user_email.value = "";
             user_password.value = "";
             setInterval(function() {  //Cambiar de página después de un tiempo
