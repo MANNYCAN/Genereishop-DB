@@ -58,7 +58,7 @@ function inicio (){
 			  redirect: "follow"
 			};
 			
-			fetch("http://localhost:8080/api/productos/", requestOptions)
+			fetch("/api/productos/", requestOptions)
 			  .then((response) => response.json())
 			  .then((result) => {arregloAllproductos = result;
 			  console.log(arregloAllproductos)

@@ -508,3 +508,9 @@ Haciendo responsivos los botones de busqueda
       padding: 6px 12px;  /* Reducir más el padding en móviles */
     }
   }
+
+
+  #btnAgregar, #btnClear{
+
+    margin: 10px 30px 10px 30px;
+  }

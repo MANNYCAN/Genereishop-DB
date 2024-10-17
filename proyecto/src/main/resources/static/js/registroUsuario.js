@@ -192,7 +192,7 @@ function showAlert(element, message) {
 			  redirect: "follow"
 			};
 			
-			fetch("http://localhost:8080/api/users/", requestOptions)
+			fetch("/api/users/", requestOptions)
 			  .then((response) => response.text())
 			  .then((result) => console.log(result))
 			  .catch((error) => console.error(error));

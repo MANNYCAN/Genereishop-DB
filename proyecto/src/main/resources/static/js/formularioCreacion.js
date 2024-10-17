@@ -161,7 +161,7 @@ button_publicar.addEventListener("click",function(event){
 				  redirect: "follow"
 				};
 				
-				fetch("http://localhost:8080/api/productos/", requestOptions)
+				fetch("/api/productos/", requestOptions)
 				  .then((response) => response.text())
 				  .then((result) => console.log(result))
 				  .catch((error) => console.error(error));
