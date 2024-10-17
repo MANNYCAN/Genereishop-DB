@@ -1,10 +1,16 @@
 package com.genereishop.proyecto.modelo;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -23,8 +29,13 @@ public class Adress {
 	@Column(nullable = false)
 	private String adressExtNum;
 	private String adressIntNum;
-	
-	//private static Long total = Long.valueOf(0);
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "adressAdressId", referencedColumnName = "adressId")
+	List<User> users = new ArrayList<User>();
+
+	public List<User> getUsers() {
+		return users;
+	}//getUsers
 
 	public Adress(String adressState, Integer adressZip, String adressStreet, String adressExtNum,
 			String adressIntNum) {
@@ -33,13 +44,11 @@ public class Adress {
 		this.adressStreet = adressStreet;
 		this.adressExtNum = adressExtNum;
 		this.adressIntNum = adressIntNum;
-//		Adress.total++;
-//		adressId = Adress.total;
+
 	}//constructor
 
 	public Adress() {
-//		Adress.total++;
-//		adressId = Adress.total;
+
 	}//constructor
 
 	public Long getId() {

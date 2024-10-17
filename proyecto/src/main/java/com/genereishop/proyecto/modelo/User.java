@@ -1,5 +1,9 @@
 package com.genereishop.proyecto.modelo;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -25,27 +30,26 @@ public class User {
 	@Column(nullable = false)
 	private String userPassword;
 	//@ManyToOne
-	//@JoinColumn(name ="Adress_adressId", nullable = false, referencedColumnName = "adressId")
+	//@JoinColumn(name ="adress_adressId", nullable = false, referencedColumnName = "adressId")
 	@Column(nullable = false)
-	private Long Adress_adressId ;//llave foranea 
-	
-	//private static Long total = Long.valueOf(0);
-	
-	
-	public User(String userName, Long userPhone, String userEmail, String userPassword, Long Adress_adressId) {
+	private Long adressAdressId ;//llave foranea 
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_userId", referencedColumnName = "userId")
+	List<Order> orders = new ArrayList<Order>();
+
+	public List<Order> getOrders() {
+		return orders;
+	}//getOrders
+
+	public User(String userName, Long userPhone, String userEmail, String userPassword, Long adressAdressId) {
 		this.userName = userName;
 		this.userPhone = userPhone;
 		this.userEmail = userEmail;
 		this.userPassword = userPassword;
-		this.Adress_adressId= Adress_adressId;
-		
-		//User.total++;
-		//userId = User.total;
+		this.adressAdressId= adressAdressId;
 	}//Constructor de User 
 
 	public User() {
-		//User.total++;
-		//userId = User.total;
 	}//Constructor vacio 
 
 	//=========== getter & setters
@@ -54,13 +58,13 @@ public class User {
 		return userId;
 	}//getuser
 
-	public Long getAdress_adressId() {
-		return Adress_adressId;
-	}
+	public Long getAdressAdressId() {
+		return adressAdressId;
+	}//getadress_adressId
 
-	public void setAdress_adressId(Long adress_adressId) {
-		Adress_adressId = adress_adressId;
-	}
+	public void setAdressAdressId(Long adressAdressId) {
+		this.adressAdressId = adressAdressId;
+	}//setadress_adressId
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
@@ -102,7 +106,7 @@ public class User {
 	public String toString() {
 		return "User [userId=" + userId + ", userName=" + userName + ", userPhone=" + userPhone + ", userEmail="
 				+ userEmail + ", userPassword=" + userPassword + "]";
-	}
+	}//toString
 	
 	
 	

@@ -1,10 +1,16 @@
 package com.genereishop.proyecto.modelo;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -20,10 +26,18 @@ public class Product {
 	private int productStock;
 	private String productImage;
 	
-	//private static Long  total = Long.valueOf(0);
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "productProductIdFk", referencedColumnName = "productId")
+	List<OrderHasProduct> orderHasProducts = new ArrayList<OrderHasProduct>();
 	
 	
 	
+	public List<OrderHasProduct> getOrderHasProducts() {
+		return orderHasProducts;
+	}//getOrderHasProducts
+
+
+
 	public Product(String productName, String productDescription, float productPrice, int productStock,
 			String productImage) {
 		super();
@@ -32,17 +46,11 @@ public class Product {
 		this.productPrice = productPrice;
 		this.productStock = productStock;
 		this.productImage = productImage;
-//		Product.total++; 
-//		productId = Product.total;
 	}//constructor
 
 
 
-	public Product () {
-//		Product.total++; 
-//		productId = Product.total;
-		
-	}//constructor
+	public Product () {}//constructor
 
 
 

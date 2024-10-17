@@ -1,23 +1,31 @@
 package com.genereishop.proyecto.modelo;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Order_has_Product")
 public class OrderHasProduct {
-	
-	private Long orderId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="orderHasProductId", unique = true, nullable = false)
+	private Long orderHasProductId;
+	@Column(nullable = false)
 	private Long oHPQuantity;
-	private Long productId;
-	
-	private static Long total = Long.valueOf(0);
+	@Column(nullable = false)
+	private Long orderOrderIdFk;
+	@Column(nullable = false)
+	private Long productProductIdFk;
 	
 	public OrderHasProduct(Long oHPQuantity) {
 		this.oHPQuantity = oHPQuantity;
-		OrderHasProduct.total++;
-		orderId = OrderHasProduct.total;
 	}//OrderHasProduct Constructor
 	
-	public OrderHasProduct() {
-		OrderHasProduct.total++;
-		orderId = OrderHasProduct.total;
-	} //Constructor vacio
+	public OrderHasProduct() {} //Constructor vacio
 	
 	public Long getoHPQuantity() {
 		return oHPQuantity;
@@ -26,19 +34,38 @@ public class OrderHasProduct {
 		this.oHPQuantity = oHPQuantity;
 	}//setoHPQuantity
 	
-	
-	public Long getOrderId() {
-		return orderId;
-	}//getOrderId
-	public void setOrderId(Long orderId) {
-		this.orderId = orderId;
-	}//setOrderId
-	
+
+	public Long getOrderHasProductId() {
+		return orderHasProductId;
+	}//getOrderHasProductId
+
+	public void setOrderHasProductId(Long orderHasProductId) {
+		this.orderHasProductId = orderHasProductId;
+	}//setOrderHasProductId
+
+	public Long getOrder_orderId_fk() {
+		return orderOrderIdFk;
+	}//getOrder_orderId_fk
+
+	public void setOrder_orderId_fk(Long orderOrderIdFk) {
+		this.orderOrderIdFk = orderOrderIdFk;
+	}//setOrder_orderId_fk
+
+	public Long getProduct_productId_fk() {
+		return productProductIdFk;
+	}//getProduct_productId_fk
+
+	public void setProduct_productId_fk(Long productProductIdFk) {
+		this.productProductIdFk = productProductIdFk;
+	}//setProduct_productId_fk
+
 	@Override
 	public String toString() {
-		return "OrderHasProduct [oHPQuantity=" + oHPQuantity + ", orderId=" + orderId + ", productId=" + productId
-				+ "]";
+		return "OrderHasProduct [orderHasProductId=" + orderHasProductId + ", oHPQuantity=" + oHPQuantity
+				+ ", orderOrderIdFk=" + orderOrderIdFk + ", productProductIdFk=" + productProductIdFk + "]";
 	}//toString
+
+	
 	
 	
 	

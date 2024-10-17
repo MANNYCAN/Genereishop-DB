@@ -1,76 +1,65 @@
 package com.genereishop.proyecto.service;
 
-import java.util.ArrayList;
+
 import java.util.List;
-
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-
 import com.genereishop.proyecto.modelo.OrderHasProduct;
+import com.genereishop.proyecto.repository.OrderHasProductRepository;
+
 
 @Service
 public class OrderHasProductService {
-	private final ArrayList<OrderHasProduct> lista = new ArrayList<OrderHasProduct>();
-	public OrderHasProductService(){
-		lista.add(new OrderHasProduct(Long.valueOf(50L)));
-		lista.add(new OrderHasProduct(Long.valueOf(13L)));
-	}//constructor OrderHasProductService
+
 	
 	
-	public List<OrderHasProduct> getAllOrdersHasProducts() {
-		return lista;
-	}//getAllOrdersHasProducts
+public final OrderHasProductRepository orderHasProductRepository; 
 	
-	public OrderHasProduct getOrderHasProduct(Long orderId) {
-		OrderHasProduct or=null;
-		for (OrderHasProduct order : lista) {
-			if (order.getOrderId()==orderId) {
-				or=order;
-				break;
-			}//if
-		}//foreach
-		return or;
-	}//getOrderHasProduct
+	@Autowired
+	public OrderHasProductService(OrderHasProductRepository orderHasProductRepository) {
+		this.orderHasProductRepository = orderHasProductRepository;
+	}//contructor
+
+
+	public List<OrderHasProduct> gettAllOrderHasProducts() {
+		return orderHasProductRepository.findAll();
+	}//gettAllOrders
+
+	
+	public OrderHasProduct getOrderHasProduct(Long orderHasProductId) {
+		return orderHasProductRepository.findById(orderHasProductId).orElseThrow( ()-> new IllegalArgumentException("La ordenHasProduct con el id [" + orderHasProductId
+				+ "] no existe"));
+	}//getOrder
 
 	public OrderHasProduct addOrderHasProduct(OrderHasProduct orderHasProduct) {
+		Optional<OrderHasProduct> ord = orderHasProductRepository.findByOrderOrderIdFk(orderHasProduct.getOrder_orderId_fk());
+		Optional<OrderHasProduct> or = orderHasProductRepository.findByProductProductIdFk(orderHasProduct.getProduct_productId_fk());
+		if((ord.isEmpty()) || (or.isEmpty())) {
+			return orderHasProductRepository.save(orderHasProduct);
+		}
+		return null;
+	}//addOrder POST
+
+	public OrderHasProduct deleteOrderHasProduct(Long orderHasProductId) {
+		OrderHasProduct order=null;
+		if (orderHasProductRepository.existsById(orderHasProductId)) {
+			order = orderHasProductRepository.findByOrderHasProductId(orderHasProductId).get();
+			orderHasProductRepository.deleteById(orderHasProductId);
+		}//ifExists
+		return order;
+	}//deleteOrder
+
+	public OrderHasProduct updateOrderHasProduct(Long orderHasProductId, Long oHPQuantity) {
 		OrderHasProduct or=null;
-		boolean flag = false;
-		//Agregar la validacion, cuando intente agregar el mismpo usaurio me regresara null
-		for (OrderHasProduct order : lista) {
-		 if(order.getOrderId().equals(orderHasProduct.getOrderId())){
-		     flag=true;
-		    break;
-		} //if
-		}//forEach
-		if(!flag){
-		lista.add(orderHasProduct);
-		or=orderHasProduct;
-		 }//!flag
-		return or;
-	}//addOrderHasProduct
-
-
-	public OrderHasProduct deleteOrderHasProduct(Long orderId) {
-		OrderHasProduct or=null;
-		for (OrderHasProduct order : lista) {
-			if (order.getOrderId()==orderId) {
-				or=lista.remove(lista.indexOf(order));
-				break;
-			}//if
-		}//foreach
-		return or;
-	}//deleteOrderHasProduct
-
-
-	public OrderHasProduct updateOrderHasProduct(Long orderId, Long oHPQuantity) {
-		OrderHasProduct or=null; //Por si no lo encuentro
-		for (OrderHasProduct order : lista) {
-			if(order.getOrderId()==orderId) {
-				if(oHPQuantity!=null) order.setoHPQuantity(oHPQuantity); 
+		if(orderHasProductRepository.existsById(orderHasProductId)) {
+			OrderHasProduct order = orderHasProductRepository.findById(orderHasProductId).get();
+			if(oHPQuantity != null) {
+				order.setoHPQuantity(oHPQuantity);
+				orderHasProductRepository.save(order);
 				or=order;
-				break;
-			}//if
-		}//foreach
+			}
+		}//repository
 		return or;
-	}//updateOrderHasProduct
+	}//updateService
 }// class OrderHasProductService

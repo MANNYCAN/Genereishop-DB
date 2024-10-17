@@ -30,7 +30,7 @@ public class OrderHasProductController {
 	
 	@GetMapping //https:localhost:8080/api/ordershasproducts/)
 	public List<OrderHasProduct> getOrdersHasProducts(){
-		return orderHasProductService.getAllOrdersHasProducts();
+		return orderHasProductService.gettAllOrderHasProducts();
 	}//getOrdersHasProducts
 	
 	

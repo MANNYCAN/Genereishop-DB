@@ -1,12 +1,17 @@
 package com.genereishop.proyecto.modelo;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -21,8 +26,19 @@ public class Order {
 	@Column(nullable = false)
 	private Long user_userId;
 	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "orderOrderIdFk", referencedColumnName = "orderId")
+	List<OrderHasProduct> orderHasProducts = new ArrayList<OrderHasProduct>();
 	
-///////////////////////Constructores///////////////////////////
+	
+	
+	
+	
+public List<OrderHasProduct> getOrderHasProducts() {
+		return orderHasProducts;
+	}//getOrderHasProducts
+
+	///////////////////////Constructores///////////////////////////
 	public Order(LocalDate orderDate, Long user_userId) {
 		this.orderDate = orderDate;
 		this.user_userId = user_userId;
