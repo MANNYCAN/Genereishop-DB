@@ -51,9 +51,10 @@ public class UserController {
 	public User updateUser(@RequestBody ChangePassword changepassword,
 			@PathVariable("usId") Long usId,
 			@RequestParam(required=false) String userName,
-			@RequestParam(required=false) Long userPhone
+			@RequestParam(required=false) Long userPhone,
+			@RequestParam(required=false) Long adressAdressId
 			) {
-		return userservice.updateUser(usId, changepassword, userName, userPhone);
+		return userservice.updateUser(usId, changepassword, userName, userPhone, adressAdressId);
 	}//UpdateUser
 	
 	

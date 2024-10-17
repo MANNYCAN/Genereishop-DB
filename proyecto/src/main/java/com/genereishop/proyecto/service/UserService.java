@@ -60,7 +60,7 @@ public class UserService {
 		
 	}//deleteUser
 
-	public User updateUser(Long usId, ChangePassword changepassword, String userName, Long userPhone) {
+	public User updateUser(Long usId, ChangePassword changepassword, String userName, Long userPhone, Long adressAdressId) {
 		User user = null;
 		if(userRepository.existsById(usId)) {
 			User usuario = userRepository.findById(usId).get();
@@ -72,6 +72,7 @@ public class UserService {
 					}else {
 							if(userName != null)usuario.setUserName(userName);
 							if(userPhone != null)usuario.setUserPhone(userPhone);
+							if(adressAdressId != null)usuario.setAdressAdressId(adressAdressId);
 							if(changepassword.getPassword() != null)usuario.setUserPassword(encoder.encode(changepassword.getPassword()));
 							userRepository.save(usuario);
 							user = usuario;
