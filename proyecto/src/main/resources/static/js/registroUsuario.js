@@ -92,21 +92,21 @@ function showAlert(element, message) {
         clearAlert(User_name); // Limpiar alerta si el campo es válido
     }
 
-    let array = [];
+   /* let array = [];
     for (let i = 0; i < localStorage.length; i++) {
         let key = localStorage.key(i);
         array.push(key)
-    }
+    }*/
     
     // Validación del correo electrónico
     if (!valEmail()) {
         user_email.style.border = "solid red medium";
         showAlert(user_email, `El correo electrónico debe tener un formato válido (e.g., ejemplo@dominio.com).`); 
         is_valid = false;
-    } else if (array.includes(user_email.value.trim())) {
+    /*} else if (array.includes(user_email.value.trim())) {
         user_email.style.border = "solid red medium";
         showAlert(user_email, `El correo ya existe.`); 
-        is_valid = false;
+        is_valid = false;*/
     } else {
         clearAlert(user_email); // Limpiar alerta si el campo es válido
     }
@@ -163,14 +163,6 @@ function showAlert(element, message) {
     // Si los datos son válidos, enviar el formulario
     if (is_valid) {
         // Datos a enviar
-        const Usuario = {
-            nombre: User_name.value.trim(),
-            correo: user_email.value.trim(),
-            telefono: user_phoneNumber.value.trim(),
-            contraseña: user_password.value.trim(),
-            bolsaDeCompras: []
-
-        };
         
         const Usuariop =   {
         "userName": User_name.value.trim(),
@@ -196,8 +188,7 @@ function showAlert(element, message) {
 			  .then((response) => response.text())
 			  .then((result) => console.log(result))
 			  .catch((error) => console.error(error));
-
-         localStorage.setItem(`${user_email.value.trim()}`,JSON.stringify(Usuario));
+		
 
         User_name.value = "";
         user_email.value = "";

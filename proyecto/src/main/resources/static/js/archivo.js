@@ -40,6 +40,7 @@ function loadFooter() {
 
 function cerrarSesion() {
         localStorage.removeItem('sesion_activa');
+        localStorage.clear();
         sessionStorage.clear();
         location.reload();
     }

@@ -92,5 +92,10 @@ public class UserService {
 		return false;
 	}//validateUser
 	
+	public String getUserNameByEmail(String email) {
+	    Optional<User> user = userRepository.findByUserEmail(email);
+	    return user.map(User::getUserName).orElse(null);
+	}
+	
 	
 }//userservice

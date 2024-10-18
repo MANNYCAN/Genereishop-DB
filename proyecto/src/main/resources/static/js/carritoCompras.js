@@ -138,8 +138,9 @@ function iniciar() {
 
 function iniciar(){
 tablaListaCompras.innerHTML = "";
-let emaill=(JSON.parse(localStorage.getItem("sesion_activa"))).email;
-let usuarioArreglo=(JSON.parse(localStorage.getItem(emaill))).bolsaDeCompras;
+let sesionActiva = JSON.parse(localStorage.getItem("sesion_activa"));
+let emaill = sesionActiva.email;
+let usuarioArreglo = JSON.parse(localStorage.getItem(emaill)).bolsaDeCompras;
 
 totalEnProductos.insertAdjacentHTML("afterbegin",` ${usuarioArreglo.length}`);
 
@@ -214,8 +215,6 @@ btnClear.addEventListener("click",function(event){
     let datos={
         nombre:(JSON.parse(localStorage.getItem(`${emaill}`))).nombre,
         correo:(JSON.parse(localStorage.getItem(`${emaill}`))).correo,
-        telefono: (JSON.parse(localStorage.getItem(`${emaill}`))).telefono,
-        contraseña: (JSON.parse(localStorage.getItem(`${emaill}`))).contraseña,
         bolsaDeCompras: usuarioArreglo
     }
     localStorage.setItem((JSON.parse(localStorage.getItem(`${emaill}`))).correo, JSON.stringify(datos))
