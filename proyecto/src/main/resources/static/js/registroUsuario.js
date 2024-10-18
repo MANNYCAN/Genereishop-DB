@@ -8,6 +8,27 @@ const feedback = document.getElementById('checkboxFeedback');
 let button_register = document.getElementById("button_register");
 let alert_container = document.getElementById("alert-container")
 
+	const requestOptions = {
+						  method: "GET",
+						  redirect: "follow"
+						};
+	
+	let array = [];  // Declarar el array fuera para que esté accesible
+						
+						fetch("/api/users/", requestOptions)
+   						.then((response) => response.json()) // se parsea la respuesta
+   						.then((result) => {
+						const usersArray = result; // Almacenar los usuarios en un array
+						//console.log(usersArray) // Imprimir el array de usuarios
+						  // Recorrer usersArray y agregar los elementos al array
+						    for (let i = 0; i < usersArray.length; i++) {
+						      let user = usersArray[i];  // Obtener el usuario en la posición i
+						      array.push(user);  // Añadir el usuario al array
+						    }
+						
+						    //console.log(array);  // Verificar que los usuarios se hayan añadido al array
+						  })
+						  .catch((error) => console.log("Error:", error));
 
 // Bandera para validar
 let is_valid = true;
@@ -91,36 +112,23 @@ function showAlert(element, message) {
     } else {
         clearAlert(User_name); // Limpiar alerta si el campo es válido
     }
-
-   /* let array = [];
-    for (let i = 0; i < localStorage.length; i++) {
-        let key = localStorage.key(i);
-        array.push(key)
-    }*/
+    
+   
     
     // Validación del correo electrónico
     if (!valEmail()) {
         user_email.style.border = "solid red medium";
         showAlert(user_email, `El correo electrónico debe tener un formato válido (e.g., ejemplo@dominio.com).`); 
         is_valid = false;
-    /*} else if (array.includes(user_email.value.trim())) {
+    } else if (array.some(usuario => usuario.userEmail && usuario.userEmail.trim() === (user_email.value.trim()))) {
+		
         user_email.style.border = "solid red medium";
         showAlert(user_email, `El correo ya existe.`); 
-        is_valid = false;*/
+        is_valid = false;
     } else {
         clearAlert(user_email); // Limpiar alerta si el campo es válido
     }
-
-    
-
-    // Validación del correo electrónico existente
-    // if (array.includes(user_email.value.trim())) {
-    //     user_email.style.border = "solid red medium";
-    //     showAlert(user_email, `El correo ya existe`); 
-    //     is_valid = false;
-    // } else {
-    //     clearAlert(user_email); // Limpiar alerta si el campo es válido
-    // }
+  
 
      // Validación del teléfono
      if (!valPhone()) {

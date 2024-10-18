@@ -26,18 +26,20 @@ public class JwtFilter extends GenericFilterBean{
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		String authHeader = httpServletRequest.getHeader("Authorization");
 		if (  (("POST".equals(httpServletRequest.getMethod())) && 
-				(! httpServletRequest.getRequestURI().contains("/api/users/") )  )  //Registro
-				||
-				( ("GET".equals(httpServletRequest.getMethod())) && 
-						(! httpServletRequest.getRequestURI().contains("/api/productos/") )  ) || //Productos
-			  ("PUT".equals(httpServletRequest.getMethod())) ||
-			  ("DELETE".equals(httpServletRequest.getMethod()))
-			) {
-			
-			if (authHeader == null || !authHeader.startsWith("Bearer")) {
-				System.out.println("1.Invalid Token");
-				throw new ServletException("1. Invalid Token");
-			}// if authHeader
+	            (!httpServletRequest.getRequestURI().contains("/api/users/")))  // Registro
+	        ||
+	        (("GET".equals(httpServletRequest.getMethod())) && 
+	            (!httpServletRequest.getRequestURI().contains("/api/productos/")) &&  // Productos
+	            (!httpServletRequest.getRequestURI().contains("/api/users/")))  // GET a users no requiere autorización
+	        ||
+	        ("PUT".equals(httpServletRequest.getMethod())) ||
+	        ("DELETE".equals(httpServletRequest.getMethod()))
+	    ) {
+	        // Validación del encabezado Authorization
+	        if (authHeader == null || !authHeader.startsWith("Bearer")) {
+	            System.out.println("1. Invalid Token");
+	            throw new ServletException("1. Invalid Token");
+	        }
 			String token = authHeader.substring(7);
 			try {
 			Claims claims = Jwts.parser().setSigningKey(secret)
